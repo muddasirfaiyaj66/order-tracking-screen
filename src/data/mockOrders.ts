@@ -14,7 +14,7 @@ export const mockOrders: Order[] = [
   {
     orderId: 'OT-1001',
     productName: 'Wireless Noise-Cancelling Headphones',
-    productImage: 'https://placehold.co/96x96/e2e8f0/64748b?text=Audio',
+    productImage: '/products/headphones.png',
     productDetails: details({
       description:
         'Over-ear wireless headphones with active noise cancellation and 30-hour battery life.',
@@ -34,7 +34,7 @@ export const mockOrders: Order[] = [
   {
     orderId: 'OT-1002',
     productName: 'USB-C Fast Charger 65W',
-    productImage: 'https://placehold.co/96x96/e2e8f0/64748b?text=Power',
+    productImage: '/products/charger.png',
     productDetails: details({
       description: 'Compact GaN charger with dual USB-C ports for laptops and phones.',
       quantity: 2,
@@ -53,7 +53,7 @@ export const mockOrders: Order[] = [
   {
     orderId: 'OT-1003',
     productName: 'Braided Charging Cable 2m',
-    productImage: 'https://placehold.co/96x96/e2e8f0/64748b?text=Cable',
+    productImage: '/products/cable.png',
     productDetails: details({
       description: 'Durable nylon-braided USB-C to USB-C cable rated for 100W charging.',
       quantity: 1,
@@ -73,7 +73,7 @@ export const mockOrders: Order[] = [
   {
     orderId: 'OT-1004',
     productName: 'Compact Bluetooth Speaker',
-    productImage: 'https://placehold.co/96x96/e2e8f0/64748b?text=Speaker',
+    productImage: '/products/speaker.png',
     productDetails: details({
       description: 'Portable IPX7 speaker with 12-hour playtime and rich bass.',
       quantity: 1,
@@ -92,7 +92,7 @@ export const mockOrders: Order[] = [
   {
     orderId: 'OT-2001',
     productName: 'Ergonomic Laptop Stand',
-    productImage: 'https://placehold.co/96x96/fef3c7/92400e?text=Stand',
+    productImage: '/products/laptop-stand.png',
     productDetails: details({
       description: 'Adjustable aluminum stand that raises laptops for better posture.',
       quantity: 1,
@@ -115,7 +115,7 @@ export const mockOrders: Order[] = [
   {
     orderId: 'OT-2002',
     productName: 'Ceramic Pour-Over Coffee Set',
-    productImage: 'https://placehold.co/96x96/fee2e2/991b1b?text=Coffee',
+    productImage: '/products/coffee-set.png',
     productDetails: details({
       description: 'Hand-glazed ceramic dripper with matching server for daily pour-overs.',
       quantity: 1,
@@ -135,7 +135,7 @@ export const mockOrders: Order[] = [
   {
     orderId: 'OT-2003',
     productName: 'Merino Wool Travel Scarf',
-    productImage: 'https://placehold.co/96x96/e0e7ff/3730a3?text=Scarf',
+    productImage: '/products/scarf.png',
     productDetails: details({
       description: 'Lightweight merino scarf that packs small and stays warm on the road.',
       quantity: 1,

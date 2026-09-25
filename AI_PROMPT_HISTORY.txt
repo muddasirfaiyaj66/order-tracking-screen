@@ -1,0 +1,43 @@
+Prompt 1 — Project setup
+
+Set up a new React + Vite project with Tailwind CSS for a mobile-first Order Tracking Screen. Initialize the folder structure with components, mock data, and a clean App entry point.
+
+Prompt 2 — Mock data
+
+Create a mock data file with sample orders. Each order should have: order ID, product name/image, current status (Processing, Shipped, Out for Delivery, Delivered), estimated delivery date, order date, and a flag/field to simulate three edge cases: delayed order, delivered-but-not-received, and tracking-not-available.
+
+Prompt 3 — Core timeline component
+
+Build a visual order progress timeline/stepper component showing the 4 stages (Processing, Shipped, Out for Delivery, Delivered) with clear active/completed/upcoming states, using icons and connecting lines.
+
+Prompt 4 — Main screen layout
+
+Build the main Order Tracking screen: order/product summary header, current status badge, estimated delivery date, the timeline component, and a "Contact Support" button. Design for ~360–430px mobile width, with clean spacing and visual hierarchy.
+
+Prompt 5 — Loading and empty/error states
+
+Add a loading skeleton state for the tracking screen and an empty/error state for when tracking data fails to load, styled consistently with the rest of the UI.
+
+Prompt 6 — Edge case: delayed order
+
+Implement the delayed order state: clearly show the delay with a warning-style banner, updated estimated delivery date, and a suggested next step (e.g., "Track live location" or "Contact support").
+
+Prompt 7 — Edge case: delivered but not received
+
+Implement the delivered-but-not-received state: show the delivered status but present an alert prompting the customer to confirm receipt, with a "Report an issue" / "I haven't received this" action button.
+
+Prompt 8 — Edge case: tracking not available
+
+Implement the tracking-not-available state: order exists, but no tracking info yet. Show a friendly, non-empty placeholder UI instead of a blank screen, reassuring the user tracking will update soon.
+
+Prompt 9 — Interactions
+
+Add meaningful interactions: tapping order details expands product info, "Contact Support" opens a modal or action sheet, and add a way to report a delivery issue from the relevant states.
+
+Prompt 10 — Polish pass
+
+Review the whole screen for spacing, typography, color consistency, and responsiveness across mobile widths 360–430px. Suggest and apply refinements.
+
+Prompt 11 — README
+
+Write a brief README explaining the project setup, how to run it locally, tech stack used, and a short summary of design decisions for the three edge-case states.
