@@ -23,6 +23,7 @@ npm run lint     # run oxlint
 src/
   components/
     OrderTrackingScreen.tsx
+    OrderProgressStepper.tsx
   data/
     mockOrders.ts      # sample orders + edge cases
   types/

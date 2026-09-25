@@ -1,11 +1,5 @@
-import type { Order, OrderStatus } from '../types/order'
-
-const STATUS_FLOW: OrderStatus[] = [
-  'Processing',
-  'Shipped',
-  'Out for Delivery',
-  'Delivered',
-]
+import type { Order } from '../types/order'
+import { OrderProgressStepper } from './OrderProgressStepper'
 
 function formatDate(isoDate: string) {
   return new Intl.DateTimeFormat(undefined, {
@@ -21,8 +15,6 @@ interface OrderTrackingScreenProps {
 }
 
 export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
-  const currentIndex = STATUS_FLOW.indexOf(order.status)
-
   return (
     <div className="mx-auto min-h-dvh w-full max-w-md bg-slate-50">
       <header className="px-4 pt-6 pb-4">
@@ -84,47 +76,10 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
       </section>
 
       {!order.isTrackingUnavailable && (
-        <section className="px-4 py-6" aria-label="Delivery progress">
-          <ol className="space-y-0">
-            {STATUS_FLOW.map((step, index) => {
-              const completed = index < currentIndex
-              const current = index === currentIndex
-              const isLast = index === STATUS_FLOW.length - 1
-
-              return (
-                <li key={step} className="relative flex gap-3 pb-6 last:pb-0">
-                  {!isLast && (
-                    <span
-                      className={`absolute top-3 left-[11px] h-[calc(100%-0.75rem)] w-0.5 ${
-                        completed ? 'bg-emerald-400' : 'bg-slate-200'
-                      }`}
-                      aria-hidden="true"
-                    />
-                  )}
-                  <span
-                    className={`relative z-10 mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-full border-2 ${
-                      current || completed
-                        ? 'border-emerald-500 bg-emerald-500'
-                        : 'border-slate-300 bg-white'
-                    }`}
-                    aria-hidden="true"
-                  >
-                    {(completed || current) && (
-                      <span className="size-2 rounded-full bg-white" />
-                    )}
-                  </span>
-                  <p
-                    className={`pt-0.5 text-sm font-semibold ${
-                      current || completed ? 'text-slate-900' : 'text-slate-400'
-                    }`}
-                  >
-                    {step}
-                  </p>
-                </li>
-              )
-            })}
-          </ol>
-        </section>
+        <OrderProgressStepper
+          currentStatus={order.status}
+          className="mx-4 mt-4 mb-8"
+        />
       )}
     </div>
   )
