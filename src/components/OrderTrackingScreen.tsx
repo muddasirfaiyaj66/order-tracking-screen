@@ -2,6 +2,7 @@ import type { Order } from '../types/order'
 import { ContactSupportButton } from './ContactSupportButton'
 import { OrderProgressStepper } from './OrderProgressStepper'
 import { StatusBadge } from './StatusBadge'
+import { TrackingScreenFrame } from './TrackingScreenFrame'
 
 function formatDate(isoDate: string) {
   return new Intl.DateTimeFormat(undefined, {
@@ -18,8 +19,7 @@ interface OrderTrackingScreenProps {
 
 export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-[430px] flex-col bg-slate-50">
-      {/* Top bar */}
+    <TrackingScreenFrame>
       <header className="border-b border-slate-200/80 bg-white px-5 pt-5 pb-4">
         <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">
           Order tracking
@@ -45,7 +45,6 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
       </header>
 
       <main className="flex flex-1 flex-col gap-4 px-5 py-5">
-        {/* Estimated delivery */}
         <section className="rounded-2xl border border-slate-200/80 bg-white px-4 py-4 shadow-sm">
           <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">
             Estimated delivery
@@ -58,7 +57,6 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
           </p>
         </section>
 
-        {/* Edge-case notices */}
         {(order.isDelayed ||
           order.isDeliveredButNotReceived ||
           order.isTrackingUnavailable) && (
@@ -90,7 +88,6 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
           </div>
         )}
 
-        {/* Timeline */}
         {order.isTrackingUnavailable ? (
           <section className="rounded-2xl border border-dashed border-slate-300 bg-white px-5 py-10 text-center shadow-sm">
             <p className="text-sm font-medium text-slate-700">
@@ -105,10 +102,9 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
         )}
       </main>
 
-      {/* Sticky-feel footer CTA within mobile frame */}
       <footer className="mt-auto border-t border-slate-200/80 bg-white px-5 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
         <ContactSupportButton orderId={order.orderId} />
       </footer>
-    </div>
+    </TrackingScreenFrame>
   )
 }
