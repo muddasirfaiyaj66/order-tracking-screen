@@ -54,9 +54,14 @@ export const mockOrders: Order[] = [
     productName: 'Ergonomic Laptop Stand',
     productImage: 'https://placehold.co/96x96/fef3c7/92400e?text=Stand',
     status: 'Shipped',
-    estimatedDeliveryDate: '2026-09-21',
+    /** Revised ETA after delay */
+    estimatedDeliveryDate: '2026-09-27',
+    originalEstimatedDeliveryDate: '2026-09-21',
     orderDate: '2026-09-15',
     isDelayed: true,
+    delayReason:
+      'Carrier reported a regional transit delay. Your package is still en route.',
+    suggestedNextStep: 'track_live_location',
     isDeliveredButNotReceived: false,
     isTrackingUnavailable: false,
   },
@@ -86,3 +91,6 @@ export const mockOrders: Order[] = [
 
 /** Default order used by the tracking screen (happy-path: out for delivery). */
 export const mockOrder: Order = mockOrders[2]
+
+/** Delayed order sample for the delay edge-case screen. */
+export const delayedMockOrder: Order = mockOrders[4]

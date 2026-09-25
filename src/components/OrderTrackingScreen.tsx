@@ -1,5 +1,6 @@
 import type { Order } from '../types/order'
 import { ContactSupportButton } from './ContactSupportButton'
+import { DelayedOrderBanner } from './DelayedOrderBanner'
 import { OrderProgressStepper } from './OrderProgressStepper'
 import { StatusBadge } from './StatusBadge'
 import { TrackingScreenFrame } from './TrackingScreenFrame'
@@ -18,6 +19,9 @@ interface OrderTrackingScreenProps {
 }
 
 export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
+  const showUpdatedEta =
+    order.isDelayed && Boolean(order.originalEstimatedDeliveryDate)
+
   return (
     <TrackingScreenFrame>
       <header className="border-b border-slate-200/80 bg-white px-5 pt-5 pb-4">
@@ -33,6 +37,11 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <StatusBadge status={order.status} isDelayed={order.isDelayed} />
+              {order.isDelayed && (
+                <span className="text-xs font-medium text-slate-500">
+                  {order.status}
+                </span>
+              )}
             </div>
             <h1 className="mt-2 text-[17px] leading-snug font-semibold tracking-tight text-slate-900">
               {order.productName}
@@ -45,30 +54,59 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
       </header>
 
       <main className="flex flex-1 flex-col gap-4 px-5 py-5">
-        <section className="rounded-2xl border border-slate-200/80 bg-white px-4 py-4 shadow-sm">
-          <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">
-            Estimated delivery
+        <section
+          className={`rounded-2xl border px-4 py-4 shadow-sm ${
+            order.isDelayed
+              ? 'border-amber-200 bg-amber-50/40'
+              : 'border-slate-200/80 bg-white'
+          }`}
+        >
+          <p
+            className={`text-xs font-medium tracking-wide uppercase ${
+              order.isDelayed ? 'text-amber-800' : 'text-slate-500'
+            }`}
+          >
+            {order.isDelayed ? 'Updated estimated delivery' : 'Estimated delivery'}
           </p>
-          <p className="mt-1.5 text-xl font-semibold tracking-tight text-slate-900">
+          <p
+            className={`mt-1.5 text-xl font-semibold tracking-tight ${
+              order.isDelayed ? 'text-amber-950' : 'text-slate-900'
+            }`}
+          >
             {formatDate(order.estimatedDeliveryDate)}
           </p>
-          <p className="mt-1 text-sm text-slate-500">
-            Ordered on {formatDate(order.orderDate)}
-          </p>
+          {showUpdatedEta ? (
+            <p className="mt-1 text-sm text-amber-900/70">
+              Originally{' '}
+              <span className="line-through">
+                {formatDate(order.originalEstimatedDeliveryDate!)}
+              </span>
+            </p>
+          ) : (
+            <p className="mt-1 text-sm text-slate-500">
+              Ordered on {formatDate(order.orderDate)}
+            </p>
+          )}
+          {order.isDelayed && (
+            <p className="mt-2 text-sm text-slate-500">
+              Ordered on {formatDate(order.orderDate)}
+            </p>
+          )}
         </section>
 
-        {(order.isDelayed ||
-          order.isDeliveredButNotReceived ||
-          order.isTrackingUnavailable) && (
+        {order.isDelayed && (
+          <DelayedOrderBanner
+            order={order}
+            onTrackLiveLocation={() => {
+              window.alert(
+                `Live location for ${order.orderId} would open here.`,
+              )
+            }}
+          />
+        )}
+
+        {(order.isDeliveredButNotReceived || order.isTrackingUnavailable) && (
           <div className="space-y-2">
-            {order.isDelayed && (
-              <p
-                className="rounded-2xl border border-amber-200 bg-amber-50 px-3.5 py-3 text-sm leading-snug text-amber-950"
-                role="status"
-              >
-                This order is delayed past the estimated delivery date.
-              </p>
-            )}
             {order.isDeliveredButNotReceived && (
               <p
                 className="rounded-2xl border border-rose-200 bg-rose-50 px-3.5 py-3 text-sm leading-snug text-rose-950"
