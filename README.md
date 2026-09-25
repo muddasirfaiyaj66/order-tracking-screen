@@ -21,19 +21,15 @@ npm run lint     # run oxlint
 
 ```
 src/
-  components/          # UI building blocks
+  components/
     OrderTrackingScreen.tsx
-    OrderHeader.tsx
-    StatusTracker.tsx
-    DeliveryInfo.tsx
-    OrderItems.tsx
   data/
-    mockOrder.ts       # sample order payload
+    mockOrders.ts      # sample orders + edge cases
   types/
-    order.ts           # shared Order types
-  App.tsx              # app entry composition
+    order.ts           # Order / OrderStatus types
+  App.tsx
   main.tsx
-  index.css            # Tailwind + base styles
+  index.css
 ```
 
 ## Getting started

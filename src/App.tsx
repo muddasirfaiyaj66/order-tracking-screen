@@ -1,5 +1,5 @@
 import { OrderTrackingScreen } from './components/OrderTrackingScreen'
-import { mockOrder } from './data/mockOrder'
+import { mockOrder } from './data/mockOrders'
 
 function App() {
   return <OrderTrackingScreen order={mockOrder} />
