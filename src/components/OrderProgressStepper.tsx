@@ -142,7 +142,6 @@ const STATE_STYLES: Record<
     title: string
     description: string
     connector: string
-    badge: string
   }
 > = {
   completed: {
@@ -151,16 +150,14 @@ const STATE_STYLES: Record<
     title: 'text-slate-900',
     description: 'text-slate-500',
     connector: 'bg-emerald-400',
-    badge: 'bg-emerald-50 text-emerald-700',
   },
   active: {
     marker:
-      'border-emerald-500 bg-white text-emerald-600 shadow-[0_0_0_4px_rgba(16,185,129,0.2)]',
+      'border-emerald-500 bg-white text-emerald-600 shadow-[0_0_0_4px_rgba(16,185,129,0.18)]',
     icon: 'text-emerald-600',
     title: 'text-slate-900',
     description: 'text-slate-600',
     connector: 'bg-slate-200',
-    badge: 'bg-emerald-100 text-emerald-800',
   },
   upcoming: {
     marker: 'border-slate-200 bg-slate-50 text-slate-400',
@@ -168,7 +165,6 @@ const STATE_STYLES: Record<
     title: 'text-slate-400',
     description: 'text-slate-400',
     connector: 'bg-slate-200',
-    badge: 'bg-slate-100 text-slate-500',
   },
 }
 
@@ -183,15 +179,12 @@ export function OrderProgressStepper({
 }: OrderProgressStepperProps) {
   return (
     <section
-      className={`rounded-2xl border border-slate-200 bg-white p-4 shadow-sm ${className}`}
+      className={`rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm ${className}`}
       aria-label="Order progress"
     >
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <h2 className="text-sm font-semibold text-slate-900">Delivery progress</h2>
-        <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700">
-          {currentStatus}
-        </span>
-      </div>
+      <h2 className="mb-5 text-sm font-semibold text-slate-900">
+        Delivery progress
+      </h2>
 
       <ol className="relative">
         {ORDER_STATUS_FLOW.map((status, index) => {
@@ -225,21 +218,12 @@ export function OrderProgressStepper({
                     {status}
                   </p>
                   {state === 'active' && (
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-[11px] font-medium tracking-wide uppercase ${styles.badge}`}
-                    >
+                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-medium tracking-wide text-emerald-800 uppercase">
                       Current
                     </span>
                   )}
-                  {state === 'completed' && (
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-[11px] font-medium tracking-wide uppercase ${styles.badge}`}
-                    >
-                      Done
-                    </span>
-                  )}
                 </div>
-                <p className={`mt-0.5 text-sm ${styles.description}`}>
+                <p className={`mt-0.5 text-sm leading-snug ${styles.description}`}>
                   {description}
                 </p>
               </div>

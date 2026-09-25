@@ -22,12 +22,14 @@ npm run lint     # run oxlint
 ```
 src/
   components/
-    OrderTrackingScreen.tsx
-    OrderProgressStepper.tsx
+    OrderTrackingScreen.tsx   # main mobile tracking screen
+    OrderProgressStepper.tsx  # 4-stage timeline
+    StatusBadge.tsx
+    ContactSupportButton.tsx
   data/
-    mockOrders.ts      # sample orders + edge cases
+    mockOrders.ts
   types/
-    order.ts           # Order / OrderStatus types
+    order.ts
   App.tsx
   main.tsx
   index.css
