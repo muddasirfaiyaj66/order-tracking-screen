@@ -97,3 +97,6 @@ export const delayedMockOrder: Order = mockOrders[4]
 
 /** Delivered-but-not-received sample for the receipt confirmation edge case. */
 export const notReceivedMockOrder: Order = mockOrders[5]
+
+/** Tracking-not-available sample — order exists, carrier feed not ready yet. */
+export const trackingUnavailableMockOrder: Order = mockOrders[6]

@@ -5,6 +5,7 @@ import { DeliveredNotReceivedAlert } from './DeliveredNotReceivedAlert'
 import { OrderProgressStepper } from './OrderProgressStepper'
 import { StatusBadge } from './StatusBadge'
 import { TrackingScreenFrame } from './TrackingScreenFrame'
+import { TrackingUnavailablePlaceholder } from './TrackingUnavailablePlaceholder'
 
 function formatDate(isoDate: string) {
   return new Intl.DateTimeFormat(undefined, {
@@ -17,9 +18,13 @@ function formatDate(isoDate: string) {
 
 interface OrderTrackingScreenProps {
   order: Order
+  onRefreshTracking?: () => void
 }
 
-export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
+export function OrderTrackingScreen({
+  order,
+  onRefreshTracking,
+}: OrderTrackingScreenProps) {
   const showUpdatedEta =
     order.isDelayed && Boolean(order.originalEstimatedDeliveryDate)
   const isDelivered = order.status === 'Delivered'
@@ -47,6 +52,11 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
                   Confirm receipt
                 </span>
               )}
+              {order.isTrackingUnavailable && (
+                <span className="inline-flex items-center rounded-full bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-800 ring-1 ring-inset ring-sky-200">
+                  Tracking soon
+                </span>
+              )}
               {order.isDelayed && !order.isDeliveredButNotReceived && (
                 <span className="text-xs font-medium text-slate-500">
                   {order.status}
@@ -70,7 +80,9 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
               ? 'border-amber-200 bg-amber-50/40'
               : order.isDeliveredButNotReceived
                 ? 'border-rose-200 bg-rose-50/30'
-                : 'border-slate-200/80 bg-white'
+                : order.isTrackingUnavailable
+                  ? 'border-sky-200 bg-sky-50/40'
+                  : 'border-slate-200/80 bg-white'
           }`}
         >
           <p
@@ -79,7 +91,9 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
                 ? 'text-amber-800'
                 : order.isDeliveredButNotReceived
                   ? 'text-rose-800'
-                  : 'text-slate-500'
+                  : order.isTrackingUnavailable
+                    ? 'text-sky-800'
+                    : 'text-slate-500'
             }`}
           >
             {order.isDelayed
@@ -94,7 +108,9 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
                 ? 'text-amber-950'
                 : order.isDeliveredButNotReceived
                   ? 'text-rose-950'
-                  : 'text-slate-900'
+                  : order.isTrackingUnavailable
+                    ? 'text-sky-950'
+                    : 'text-slate-900'
             }`}
           >
             {formatDate(order.estimatedDeliveryDate)}
@@ -133,24 +149,11 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
           <DeliveredNotReceivedAlert order={order} />
         )}
 
-        {order.isTrackingUnavailable && (
-          <p
-            className="rounded-2xl border border-slate-200 bg-slate-100 px-3.5 py-3 text-sm leading-snug text-slate-700"
-            role="status"
-          >
-            Tracking details are not available for this order yet.
-          </p>
-        )}
-
         {order.isTrackingUnavailable ? (
-          <section className="rounded-2xl border border-dashed border-slate-300 bg-white px-5 py-10 text-center shadow-sm">
-            <p className="text-sm font-medium text-slate-700">
-              Timeline unavailable
-            </p>
-            <p className="mt-1 text-sm text-slate-500">
-              Check back soon or reach out to support for updates.
-            </p>
-          </section>
+          <TrackingUnavailablePlaceholder
+            order={order}
+            onCheckAgain={onRefreshTracking}
+          />
         ) : (
           <OrderProgressStepper currentStatus={order.status} />
         )}
