@@ -145,7 +145,7 @@ const STATE_STYLES: Record<
   }
 > = {
   completed: {
-    marker: 'border-emerald-500 bg-emerald-500 text-white shadow-sm',
+    marker: 'border-emerald-500 bg-emerald-500 text-white',
     icon: 'text-white',
     title: 'text-slate-900',
     description: 'text-slate-500',
@@ -153,7 +153,7 @@ const STATE_STYLES: Record<
   },
   active: {
     marker:
-      'border-emerald-500 bg-white text-emerald-600 shadow-[0_0_0_4px_rgba(16,185,129,0.18)]',
+      'border-emerald-500 bg-white text-emerald-600 shadow-[0_0_0_3px_rgba(16,185,129,0.16)]',
     icon: 'text-emerald-600',
     title: 'text-slate-900',
     description: 'text-slate-600',
@@ -179,10 +179,10 @@ export function OrderProgressStepper({
 }: OrderProgressStepperProps) {
   return (
     <section
-      className={`rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm ${className}`}
+      className={`rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_1px_2px_rgb(15_23_42/0.04)] min-[390px]:p-5 ${className}`}
       aria-label="Order progress"
     >
-      <h2 className="mb-5 text-sm font-semibold text-slate-900">
+      <h2 className="mb-4 text-[13px] font-semibold text-slate-900 min-[390px]:mb-5 min-[390px]:text-sm">
         Delivery progress
       </h2>
 
@@ -194,36 +194,41 @@ export function OrderProgressStepper({
           const isLast = index === ORDER_STATUS_FLOW.length - 1
 
           return (
-            <li key={status} className="relative flex gap-3.5 pb-7 last:pb-0">
+            <li
+              key={status}
+              className="relative flex gap-3 pb-6 last:pb-0 min-[390px]:gap-3.5 min-[390px]:pb-7"
+            >
               {!isLast && (
                 <span
-                  className={`absolute top-10 left-[19px] h-[calc(100%-1.5rem)] w-0.5 ${styles.connector}`}
+                  className={`absolute top-9 left-[17px] h-[calc(100%-1.25rem)] w-0.5 min-[390px]:top-10 min-[390px]:left-[19px] min-[390px]:h-[calc(100%-1.5rem)] ${styles.connector}`}
                   aria-hidden="true"
                 />
               )}
 
               <div
-                className={`relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border-2 ${styles.marker}`}
+                className={`relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border-2 min-[390px]:size-10 ${styles.marker}`}
               >
                 {state === 'completed' ? (
-                  <CheckIcon className="size-5" />
+                  <CheckIcon className="size-4 min-[390px]:size-5" />
                 ) : (
-                  <Icon className={`size-5 ${styles.icon}`} />
+                  <Icon className={`size-4 min-[390px]:size-5 ${styles.icon}`} />
                 )}
               </div>
 
-              <div className="min-w-0 flex-1 pt-1.5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <p className={`text-sm font-semibold ${styles.title}`}>
+              <div className="min-w-0 flex-1 pt-1">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <p className={`text-[13px] font-semibold min-[390px]:text-sm ${styles.title}`}>
                     {status}
                   </p>
                   {state === 'active' && (
-                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-medium tracking-wide text-emerald-800 uppercase">
+                    <span className="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-emerald-800 uppercase">
                       Current
                     </span>
                   )}
                 </div>
-                <p className={`mt-0.5 text-sm leading-snug ${styles.description}`}>
+                <p
+                  className={`mt-0.5 text-[12px] leading-snug min-[390px]:text-[13px] ${styles.description}`}
+                >
                   {description}
                 </p>
               </div>

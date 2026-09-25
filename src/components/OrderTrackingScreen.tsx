@@ -44,73 +44,63 @@ export function OrderTrackingScreen({
     setReportOpen(true)
   }
 
+  const etaTone = order.isDelayed
+    ? 'amber'
+    : order.isDeliveredButNotReceived
+      ? 'rose'
+      : order.isTrackingUnavailable
+        ? 'sky'
+        : 'neutral'
+
+  const etaCardClass = {
+    amber: 'border-amber-200/90 bg-amber-50/50',
+    rose: 'border-rose-200/90 bg-rose-50/40',
+    sky: 'border-sky-200/90 bg-sky-50/50',
+    neutral: 'border-slate-200 bg-white',
+  }[etaTone]
+
+  const etaLabelClass = {
+    amber: 'text-amber-800',
+    rose: 'text-rose-800',
+    sky: 'text-sky-800',
+    neutral: 'text-slate-500',
+  }[etaTone]
+
   return (
     <TrackingScreenFrame>
       <header className="bg-white">
-        <div className="px-5 pt-5">
-          <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">
-            Order tracking
-          </p>
+        <div className="tracking-screen-gutter pt-4">
+          <p className="eyebrow">Order tracking</p>
         </div>
         <ExpandableOrderDetails order={order} />
       </header>
 
-      <main className="flex flex-1 flex-col gap-4 px-5 py-5">
-        <section
-          className={`rounded-2xl border px-4 py-4 shadow-sm ${
-            order.isDelayed
-              ? 'border-amber-200 bg-amber-50/40'
-              : order.isDeliveredButNotReceived
-                ? 'border-rose-200 bg-rose-50/30'
-                : order.isTrackingUnavailable
-                  ? 'border-sky-200 bg-sky-50/40'
-                  : 'border-slate-200/80 bg-white'
-          }`}
-        >
-          <p
-            className={`text-xs font-medium tracking-wide uppercase ${
-              order.isDelayed
-                ? 'text-amber-800'
-                : order.isDeliveredButNotReceived
-                  ? 'text-rose-800'
-                  : order.isTrackingUnavailable
-                    ? 'text-sky-800'
-                    : 'text-slate-500'
-            }`}
-          >
+      <main className="tracking-screen-gutter flex flex-1 flex-col gap-3.5 py-4 min-[390px]:gap-4 min-[390px]:py-5">
+        <section className={`rounded-2xl border px-4 py-3.5 shadow-[0_1px_2px_rgb(15_23_42/0.04)] ${etaCardClass}`}>
+          <p className={`eyebrow ${etaLabelClass}`}>
             {order.isDelayed
               ? 'Updated estimated delivery'
               : isDelivered
                 ? 'Delivered on'
                 : 'Estimated delivery'}
           </p>
-          <p
-            className={`mt-1.5 text-xl font-semibold tracking-tight ${
-              order.isDelayed
-                ? 'text-amber-950'
-                : order.isDeliveredButNotReceived
-                  ? 'text-rose-950'
-                  : order.isTrackingUnavailable
-                    ? 'text-sky-950'
-                    : 'text-slate-900'
-            }`}
-          >
+          <p className="mt-1.5 text-lg font-semibold tracking-tight text-slate-900 min-[390px]:text-xl">
             {formatDate(order.estimatedDeliveryDate)}
           </p>
           {showUpdatedEta ? (
-            <p className="mt-1 text-sm text-amber-900/70">
+            <p className="mt-1 text-[13px] text-amber-900/75">
               Originally{' '}
               <span className="line-through">
                 {formatDate(order.originalEstimatedDeliveryDate!)}
               </span>
             </p>
           ) : (
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-[13px] text-slate-500">
               Ordered on {formatDate(order.orderDate)}
             </p>
           )}
           {order.isDelayed && (
-            <p className="mt-2 text-sm text-slate-500">
+            <p className="mt-1.5 text-[13px] text-slate-500">
               Ordered on {formatDate(order.orderDate)}
             </p>
           )}
@@ -147,7 +137,7 @@ export function OrderTrackingScreen({
         )}
       </main>
 
-      <footer className="mt-auto border-t border-slate-200/80 bg-white px-5 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+      <footer className="tracking-screen-gutter mt-auto border-t border-slate-200 bg-white pt-3.5 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <ContactSupportButton onClick={() => setSupportOpen(true)} />
       </footer>
 

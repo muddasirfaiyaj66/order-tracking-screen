@@ -1,6 +1,6 @@
 import { useId, useState } from 'react'
 import type { Order } from '../types/order'
-import { StatusBadge } from './StatusBadge'
+import { MetaChip, StatusBadge } from './StatusBadge'
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat(undefined, {
@@ -18,7 +18,7 @@ function ChevronIcon({ expanded }: { expanded: boolean }) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={`size-4 text-slate-400 transition-transform duration-200 ${
+      className={`size-3.5 text-slate-400 transition-transform duration-200 ${
         expanded ? 'rotate-180' : ''
       }`}
       aria-hidden="true"
@@ -40,10 +40,10 @@ export function ExpandableOrderDetails({ order }: ExpandableOrderDetailsProps) {
   const lineTotal = details.unitPrice * details.quantity
 
   return (
-    <div className="border-b border-slate-200/80 bg-white">
+    <div className="border-b border-slate-200 bg-white">
       <button
         type="button"
-        className="flex w-full items-start gap-3.5 px-5 pt-5 pb-4 text-left transition hover:bg-slate-50/80 active:bg-slate-50"
+        className="tracking-screen-gutter flex w-full items-start gap-3 pt-3 pb-4 text-left transition hover:bg-slate-50/70 active:bg-slate-50"
         aria-expanded={expanded}
         aria-controls={panelId}
         onClick={() => setExpanded((value) => !value)}
@@ -51,39 +51,33 @@ export function ExpandableOrderDetails({ order }: ExpandableOrderDetailsProps) {
         <img
           src={order.productImage}
           alt=""
-          className="size-[72px] shrink-0 rounded-2xl bg-slate-100 object-cover ring-1 ring-slate-200/80"
+          className="size-14 shrink-0 rounded-xl bg-slate-100 object-cover ring-1 ring-slate-200 min-[390px]:size-16 min-[390px]:rounded-2xl"
         />
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-1.5">
             <StatusBadge
               status={order.status}
               isDelayed={order.isDelayed && !order.isDeliveredButNotReceived}
             />
             {order.isDeliveredButNotReceived && (
-              <span className="inline-flex items-center rounded-full bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-800 ring-1 ring-inset ring-rose-200">
-                Confirm receipt
-              </span>
+              <MetaChip tone="rose">Confirm receipt</MetaChip>
             )}
             {order.isTrackingUnavailable && (
-              <span className="inline-flex items-center rounded-full bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-800 ring-1 ring-inset ring-sky-200">
-                Tracking soon
-              </span>
+              <MetaChip tone="sky">Tracking soon</MetaChip>
             )}
             {order.isDelayed && !order.isDeliveredButNotReceived && (
-              <span className="text-xs font-medium text-slate-500">
-                {order.status}
-              </span>
+              <MetaChip tone="slate">{order.status}</MetaChip>
             )}
           </div>
-          <h1 className="mt-2 text-[17px] leading-snug font-semibold tracking-tight text-slate-900">
+          <h1 className="mt-2 text-base leading-snug font-semibold tracking-tight text-slate-900 min-[390px]:text-[17px]">
             {order.productName}
           </h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-[13px] text-slate-500">
             Order{' '}
             <span className="font-medium text-slate-700">{order.orderId}</span>
           </p>
-          <p className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-slate-500">
-            {expanded ? 'Hide product details' : 'View product details'}
+          <p className="mt-2 inline-flex items-center gap-1 text-[12px] font-medium text-slate-500">
+            {expanded ? 'Hide details' : 'View details'}
             <ChevronIcon expanded={expanded} />
           </p>
         </div>
@@ -96,38 +90,48 @@ export function ExpandableOrderDetails({ order }: ExpandableOrderDetailsProps) {
         }`}
       >
         <div className="overflow-hidden">
-          <div className="space-y-3 border-t border-slate-100 px-5 py-4">
-            <p className="text-sm leading-relaxed text-slate-600">
+          <div className="tracking-screen-gutter space-y-3 border-t border-slate-100 py-3.5">
+            <p className="text-[13px] leading-relaxed text-slate-600">
               {details.description}
             </p>
-            <dl className="grid grid-cols-2 gap-x-3 gap-y-2.5 text-sm">
+            <dl className="grid grid-cols-2 gap-x-3 gap-y-2.5 text-[13px]">
               <div>
-                <dt className="text-xs text-slate-500">Quantity</dt>
+                <dt className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                  Quantity
+                </dt>
                 <dd className="mt-0.5 font-medium text-slate-900">
                   {details.quantity}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-500">Price</dt>
+                <dt className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                  Price
+                </dt>
                 <dd className="mt-0.5 font-medium text-slate-900">
                   {formatCurrency(lineTotal)}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-500">SKU</dt>
-                <dd className="mt-0.5 font-medium text-slate-900">
+                <dt className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                  SKU
+                </dt>
+                <dd className="mt-0.5 break-all font-medium text-slate-900">
                   {details.sku}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-500">Seller</dt>
+                <dt className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                  Seller
+                </dt>
                 <dd className="mt-0.5 font-medium text-slate-900">
                   {details.seller}
                 </dd>
               </div>
               {details.color && (
                 <div>
-                  <dt className="text-xs text-slate-500">Color</dt>
+                  <dt className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                    Color
+                  </dt>
                   <dd className="mt-0.5 font-medium text-slate-900">
                     {details.color}
                   </dd>
@@ -135,7 +139,9 @@ export function ExpandableOrderDetails({ order }: ExpandableOrderDetailsProps) {
               )}
               {details.size && (
                 <div>
-                  <dt className="text-xs text-slate-500">Size</dt>
+                  <dt className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+                    Size
+                  </dt>
                   <dd className="mt-0.5 font-medium text-slate-900">
                     {details.size}
                   </dd>

@@ -86,54 +86,52 @@ export function OrderTrackingErrorState({
 
   return (
     <TrackingScreenFrame>
-      <header className="border-b border-slate-200/80 bg-white px-5 pt-5 pb-4">
-        <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">
-          Order tracking
-        </p>
+      <header className="tracking-screen-gutter border-b border-slate-200 bg-white pt-4 pb-4">
+        <p className="eyebrow">Order tracking</p>
         {orderId ? (
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-[13px] text-slate-500">
             Order <span className="font-medium text-slate-700">{orderId}</span>
           </p>
         ) : (
-          <p className="mt-2 text-sm text-slate-500">Unable to load order</p>
+          <p className="mt-2 text-[13px] text-slate-500">Unable to load order</p>
         )}
       </header>
 
-      <main className="flex flex-1 flex-col items-center justify-center px-5 py-10">
+      <main className="tracking-screen-gutter flex flex-1 flex-col items-center justify-center py-8">
         <div
-          className="w-full rounded-2xl border border-slate-200/80 bg-white px-5 py-8 text-center shadow-sm"
+          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-7 text-center shadow-[0_1px_2px_rgb(15_23_42/0.04)] min-[390px]:px-5"
           role="alert"
         >
           <div
-            className={`mx-auto flex size-14 items-center justify-center rounded-2xl ${
+            className={`mx-auto flex size-12 items-center justify-center rounded-2xl min-[390px]:size-14 ${
               variant === 'empty'
                 ? 'bg-slate-100 text-slate-500'
                 : 'bg-rose-50 text-rose-600'
             }`}
           >
-            <Icon className="size-7" />
+            <Icon className="size-6 min-[390px]:size-7" />
           </div>
 
-          <h1 className="mt-4 text-lg font-semibold tracking-tight text-slate-900">
+          <h1 className="mt-3.5 text-[15px] font-semibold tracking-tight text-slate-900 min-[390px]:text-base">
             {resolvedTitle}
           </h1>
-          <p className="mt-2 text-sm leading-relaxed text-slate-500">
+          <p className="mt-2 text-[13px] leading-relaxed text-slate-500">
             {resolvedMessage}
           </p>
 
-          <div className="mt-6 flex flex-col gap-2.5">
+          <div className="mt-5 flex flex-col gap-2">
             {onRetry && (
               <button
                 type="button"
                 onClick={onRetry}
-                className="flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+                className="touch-target flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-[13px] font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99]"
               >
                 Try again
               </button>
             )}
             <a
               href={`mailto:support@example.com?subject=${supportSubject}&body=${supportBody}`}
-              className="flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-50 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400"
+              className="touch-target flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-3 text-[13px] font-semibold text-slate-800 transition hover:bg-slate-50 active:scale-[0.99]"
             >
               Contact Support
             </a>

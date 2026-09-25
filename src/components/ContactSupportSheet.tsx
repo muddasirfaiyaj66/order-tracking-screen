@@ -20,21 +20,28 @@ function SheetAction({
   href?: string
 }) {
   const className =
-    'flex w-full flex-col rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-left transition hover:bg-slate-100 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400'
+    'flex w-full flex-col rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-left transition hover:bg-slate-100 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400'
+
+  const content = (
+    <>
+      <span className="text-[13px] font-semibold text-slate-900">{label}</span>
+      <span className="mt-0.5 text-[12px] leading-snug text-slate-500">
+        {description}
+      </span>
+    </>
+  )
 
   if (href) {
     return (
       <a href={href} className={className}>
-        <span className="text-sm font-semibold text-slate-900">{label}</span>
-        <span className="mt-0.5 text-xs text-slate-500">{description}</span>
+        {content}
       </a>
     )
   }
 
   return (
     <button type="button" onClick={onClick} className={className}>
-      <span className="text-sm font-semibold text-slate-900">{label}</span>
-      <span className="mt-0.5 text-xs text-slate-500">{description}</span>
+      {content}
     </button>
   )
 }
@@ -60,7 +67,7 @@ export function ContactSupportSheet({
       description={`Order ${order.orderId}`}
       onClose={onClose}
     >
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2">
         <SheetAction
           label="Email support"
           description="Open your mail app with order details prefilled"
@@ -82,7 +89,7 @@ export function ContactSupportSheet({
         <button
           type="button"
           onClick={onClose}
-          className="mt-1 w-full rounded-2xl px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
+          className="mt-1 w-full rounded-xl px-4 py-2.5 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50"
         >
           Cancel
         </button>

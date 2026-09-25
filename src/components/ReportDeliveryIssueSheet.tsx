@@ -53,7 +53,6 @@ export function ReportDeliveryIssueSheet({
 
   const handleClose = () => {
     onClose()
-    // Reset after close animation frame so reopen feels fresh
     window.setTimeout(() => {
       setSelected(defaultIssueType ?? null)
       setSubmitted(false)
@@ -83,15 +82,15 @@ export function ReportDeliveryIssueSheet({
       onClose={handleClose}
     >
       {submitted ? (
-        <div className="pb-2">
-          <p className="text-sm leading-relaxed text-slate-600">
+        <div className="pb-1">
+          <p className="text-[13px] leading-relaxed text-slate-600">
             Thanks — your report is noted. You can also email support if you
             need to add more details.
           </p>
           <button
             type="button"
             onClick={handleClose}
-            className="mt-4 flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+            className="touch-target mt-4 flex w-full items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-[13px] font-semibold text-white transition hover:bg-slate-800"
           >
             Done
           </button>
@@ -105,15 +104,17 @@ export function ReportDeliveryIssueSheet({
                 key={option.type}
                 type="button"
                 onClick={() => setSelected(option.type)}
-                className={`rounded-2xl border px-4 py-3 text-left transition active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 ${
+                className={`rounded-xl border px-3.5 py-2.5 text-left transition active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 ${
                   isActive
                     ? 'border-slate-900 bg-slate-900 text-white'
                     : 'border-slate-200 bg-slate-50 text-slate-900 hover:bg-slate-100'
                 }`}
               >
-                <span className="block text-sm font-semibold">{option.label}</span>
+                <span className="block text-[13px] font-semibold">
+                  {option.label}
+                </span>
                 <span
-                  className={`mt-0.5 block text-xs ${
+                  className={`mt-0.5 block text-[12px] leading-snug ${
                     isActive ? 'text-slate-300' : 'text-slate-500'
                   }`}
                 >
@@ -132,14 +133,14 @@ export function ReportDeliveryIssueSheet({
               onSubmitted?.(selected)
               submitMailto(selected)
             }}
-            className="mt-2 flex w-full items-center justify-center rounded-2xl bg-rose-700 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-rose-800 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
+            className="touch-target mt-2 flex w-full items-center justify-center rounded-2xl bg-rose-700 px-4 py-3 text-[13px] font-semibold text-white transition hover:bg-rose-800 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
           >
             Submit report
           </button>
           <button
             type="button"
             onClick={handleClose}
-            className="w-full rounded-2xl px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
+            className="w-full rounded-xl px-4 py-2.5 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50"
           >
             Cancel
           </button>

@@ -45,7 +45,7 @@ export function ActionSheet({
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
       <button
         type="button"
-        className="absolute inset-0 bg-slate-900/45 backdrop-blur-[1px]"
+        className="absolute inset-0 bg-slate-900/40"
         aria-label="Close dialog"
         onClick={onClose}
       />
@@ -56,22 +56,25 @@ export function ActionSheet({
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
         tabIndex={-1}
-        className="relative z-10 w-full max-w-[430px] rounded-t-3xl border border-slate-200 bg-white shadow-2xl outline-none sm:rounded-3xl sm:mx-4"
+        className="relative z-10 flex max-h-[min(92dvh,720px)] w-full max-w-[430px] flex-col rounded-t-3xl border border-slate-200 bg-white shadow-2xl outline-none sm:mx-4 sm:rounded-3xl"
       >
         <div className="flex justify-center pt-3 sm:hidden" aria-hidden="true">
           <span className="h-1 w-10 rounded-full bg-slate-200" />
         </div>
 
-        <div className="flex items-start justify-between gap-3 px-5 pt-4 pb-2">
+        <div className="tracking-screen-gutter flex shrink-0 items-start justify-between gap-3 pt-3 pb-2">
           <div className="min-w-0">
             <h2
               id={titleId}
-              className="text-base font-semibold tracking-tight text-slate-900"
+              className="text-[15px] font-semibold tracking-tight text-slate-900 min-[390px]:text-base"
             >
               {title}
             </h2>
             {description && (
-              <p id={descriptionId} className="mt-1 text-sm text-slate-500">
+              <p
+                id={descriptionId}
+                className="mt-1 truncate text-[13px] text-slate-500"
+              >
                 {description}
               </p>
             )}
@@ -96,7 +99,7 @@ export function ActionSheet({
           </button>
         </div>
 
-        <div className="px-5 pt-2 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+        <div className="tracking-screen-gutter min-h-0 flex-1 overflow-y-auto overscroll-contain pt-1 pb-[max(1rem,env(safe-area-inset-bottom))]">
           {children}
         </div>
       </div>

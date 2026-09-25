@@ -80,43 +80,43 @@ export function DelayedOrderBanner({
 
   return (
     <section
-      className="overflow-hidden rounded-2xl border border-amber-300 bg-amber-50 shadow-sm"
+      className="overflow-hidden rounded-2xl border border-amber-200 bg-amber-50 shadow-[0_1px_2px_rgb(15_23_42/0.04)]"
       role="status"
       aria-label="Order delayed"
     >
-      <div className="flex gap-3 px-4 py-3.5">
-        <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-800 ring-1 ring-amber-200">
-          <WarningIcon className="size-5" />
+      <div className="flex gap-3 px-3.5 py-3.5 min-[390px]:px-4">
+        <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-800 ring-1 ring-amber-200/80 min-[390px]:size-9">
+          <WarningIcon className="size-4 min-[390px]:size-5" />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-amber-950">
+          <p className="text-[13px] font-semibold text-amber-950 min-[390px]:text-sm">
             Delivery delayed
           </p>
-          <p className="mt-1 text-sm leading-snug text-amber-900/90">{reason}</p>
+          <p className="mt-1 text-[13px] leading-snug text-amber-900/85">
+            {reason}
+          </p>
         </div>
       </div>
 
-      <div className="border-t border-amber-200/80 bg-amber-100/50 px-4 py-3">
-        <p className="text-[11px] font-medium tracking-wide text-amber-800/80 uppercase">
-          Updated estimated delivery
-        </p>
-        <p className="mt-1 text-base font-semibold tracking-tight text-amber-950">
+      <div className="border-t border-amber-200/80 bg-amber-100/40 px-3.5 py-3 min-[390px]:px-4">
+        <p className="eyebrow text-amber-800/80">Updated estimated delivery</p>
+        <p className="mt-1 text-[15px] font-semibold tracking-tight text-slate-900">
           {formatDate(updatedDate)}
         </p>
-        <p className="mt-0.5 text-xs text-amber-800/80">
+        <p className="mt-0.5 text-[12px] text-amber-800/80">
           Originally {formatDate(originalDate)}
         </p>
       </div>
 
-      <div className="flex flex-col gap-2 border-t border-amber-200/80 px-4 py-3">
-        <p className="text-xs font-medium text-amber-900/80">
+      <div className="flex flex-col gap-2 border-t border-amber-200/80 px-3.5 py-3 min-[390px]:px-4">
+        <p className="text-[12px] font-medium text-amber-900/80">
           Suggested next step
         </p>
         {nextStep === 'track_live_location' ? (
           <button
             type="button"
             onClick={onTrackLiveLocation}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-900 px-4 py-3 text-sm font-semibold text-amber-50 transition hover:bg-amber-950 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-900"
+            className="touch-target flex w-full items-center justify-center gap-2 rounded-xl bg-amber-900 px-4 py-2.5 text-[13px] font-semibold text-amber-50 transition hover:bg-amber-950 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-900"
           >
             <MapPinIcon className="size-4" />
             Track live location
@@ -127,7 +127,7 @@ export function DelayedOrderBanner({
         <button
           type="button"
           onClick={onReportIssue}
-          className="flex w-full items-center justify-center rounded-xl border border-amber-300 bg-white px-4 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-50 active:scale-[0.99]"
+          className="touch-target flex w-full items-center justify-center rounded-xl border border-amber-300 bg-white px-4 py-2.5 text-[13px] font-semibold text-amber-950 transition hover:bg-amber-50 active:scale-[0.99]"
         >
           Report a delivery issue
         </button>

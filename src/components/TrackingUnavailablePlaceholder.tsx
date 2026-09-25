@@ -44,10 +44,6 @@ interface TrackingUnavailablePlaceholderProps {
   onReportIssue?: () => void
 }
 
-/**
- * Friendly placeholder when the order exists but carrier tracking
- * has not been generated yet — never a blank screen.
- */
 export function TrackingUnavailablePlaceholder({
   order,
   onCheckAgain,
@@ -57,52 +53,50 @@ export function TrackingUnavailablePlaceholder({
 
   return (
     <section
-      className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm"
+      className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_rgb(15_23_42/0.04)]"
       role="status"
       aria-label="Tracking not available yet"
     >
-      <div className="px-5 pt-6 pb-5 text-center">
-        <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-sky-50 text-sky-600 ring-1 ring-sky-100">
-          <ClockIcon className="size-7" />
+      <div className="px-4 pt-5 pb-4 text-center min-[390px]:px-5 min-[390px]:pt-6">
+        <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-sky-50 text-sky-600 ring-1 ring-sky-100 min-[390px]:size-14">
+          <ClockIcon className="size-6 min-[390px]:size-7" />
         </div>
-        <h2 className="mt-4 text-base font-semibold tracking-tight text-slate-900">
+        <h2 className="mt-3.5 text-[15px] font-semibold tracking-tight text-slate-900 min-[390px]:mt-4 min-[390px]:text-base">
           Tracking is on the way
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-slate-500">
+        <p className="mt-2 text-[13px] leading-relaxed text-slate-500">
           Your order is confirmed, but the carrier hasn&apos;t shared live
           tracking yet. This usually appears within a few hours after processing
-          begins — hang tight, we&apos;ll update this page automatically.
+          begins.
         </p>
       </div>
 
-      <div className="border-t border-slate-100 bg-slate-50/80 px-5 py-4">
-        <div className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white px-3.5 py-3">
+      <div className="border-t border-slate-100 bg-slate-50/70 px-4 py-3.5 min-[390px]:px-5">
+        <div className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white px-3 py-3">
           <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
             <PackageIcon className="size-4" />
           </div>
           <div className="min-w-0 text-left">
-            <p className="text-sm font-medium text-slate-900">
+            <p className="text-[13px] font-medium text-slate-900">
               Order {order.orderId} is active
             </p>
-            <p className="mt-0.5 text-sm text-slate-500">
-              Current status: {order.status}. Product details and delivery
-              estimate above are still accurate.
+            <p className="mt-0.5 text-[12px] leading-snug text-slate-500">
+              Status: {order.status}. Product details and ETA above are still
+              accurate.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-slate-100 px-5 py-4">
-        <p className="mb-3 text-xs font-medium tracking-wide text-slate-500 uppercase">
-          What to expect
-        </p>
-        <ol className="space-y-3" aria-hidden="true">
+      <div className="border-t border-slate-100 px-4 py-3.5 min-[390px]:px-5">
+        <p className="eyebrow mb-3">What to expect</p>
+        <ol className="space-y-2.5" aria-hidden="true">
           {ORDER_STATUS_FLOW.map((step, index) => {
             const isFirst = index === 0
             return (
-              <li key={step} className="flex items-center gap-3">
+              <li key={step} className="flex items-center gap-2.5">
                 <span
-                  className={`flex size-8 shrink-0 items-center justify-center rounded-full border text-xs font-semibold ${
+                  className={`flex size-7 shrink-0 items-center justify-center rounded-full border text-[11px] font-semibold ${
                     isFirst
                       ? 'border-sky-300 bg-sky-50 text-sky-700'
                       : 'border-dashed border-slate-200 bg-slate-50 text-slate-400'
@@ -111,12 +105,14 @@ export function TrackingUnavailablePlaceholder({
                   {index + 1}
                 </span>
                 <span
-                  className={`text-sm ${
+                  className={`min-w-0 text-[13px] ${
                     isFirst ? 'font-medium text-slate-800' : 'text-slate-400'
                   }`}
                 >
                   {step}
-                  {isFirst ? ' · in progress' : ' · coming soon'}
+                  <span className="text-slate-400">
+                    {isFirst ? ' · in progress' : ' · coming soon'}
+                  </span>
                 </span>
               </li>
             )
@@ -125,12 +121,12 @@ export function TrackingUnavailablePlaceholder({
       </div>
 
       {(onCheckAgain || onReportIssue) && (
-        <div className="flex flex-col gap-2 border-t border-slate-100 px-5 py-3.5">
+        <div className="flex flex-col gap-2 border-t border-slate-100 px-4 py-3.5 min-[390px]:px-5">
           {onCheckAgain && (
             <button
               type="button"
               onClick={onCheckAgain}
-              className="flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-50 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400"
+              className="touch-target flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-[13px] font-semibold text-slate-800 transition hover:bg-slate-50 active:scale-[0.99]"
             >
               Check again
             </button>
@@ -139,7 +135,7 @@ export function TrackingUnavailablePlaceholder({
             <button
               type="button"
               onClick={onReportIssue}
-              className="flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 active:scale-[0.99]"
+              className="flex w-full items-center justify-center rounded-xl px-4 py-2 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50 active:scale-[0.99]"
             >
               Report a delivery issue
             </button>

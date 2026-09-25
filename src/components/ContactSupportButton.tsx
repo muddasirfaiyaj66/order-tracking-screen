@@ -13,7 +13,7 @@ export function ContactSupportButton({
     <button
       type="button"
       onClick={onClick}
-      className={`flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${className}`}
+      className={`touch-target flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-[13px] font-semibold text-white transition hover:bg-slate-800 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 min-[390px]:text-sm ${className}`}
     >
       <svg
         viewBox="0 0 24 24"

@@ -16,7 +16,7 @@ export function TrackingScreenFrame({
 }: TrackingScreenFrameProps) {
   return (
     <div
-      className={`mx-auto flex min-h-dvh w-full max-w-[430px] flex-col bg-slate-50 ${className}`}
+      className={`mx-auto flex min-h-dvh w-full min-w-0 max-w-[430px] flex-col overflow-x-hidden bg-slate-50 text-[15px] text-slate-900 shadow-[0_0_0_1px_rgb(226_232_240)] sm:min-h-[100dvh] sm:shadow-lg ${className}`}
       aria-busy={ariaBusy}
       aria-live={ariaLive}
     >
