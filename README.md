@@ -26,6 +26,7 @@ src/
     OrderTrackingSkeleton.tsx
     OrderTrackingErrorState.tsx
     DelayedOrderBanner.tsx
+    DeliveredNotReceivedAlert.tsx
     OrderProgressStepper.tsx
     StatusBadge.tsx
     ContactSupportButton.tsx

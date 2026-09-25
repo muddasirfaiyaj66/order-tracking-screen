@@ -94,3 +94,6 @@ export const mockOrder: Order = mockOrders[2]
 
 /** Delayed order sample for the delay edge-case screen. */
 export const delayedMockOrder: Order = mockOrders[4]
+
+/** Delivered-but-not-received sample for the receipt confirmation edge case. */
+export const notReceivedMockOrder: Order = mockOrders[5]

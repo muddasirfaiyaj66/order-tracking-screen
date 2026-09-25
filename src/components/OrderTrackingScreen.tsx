@@ -1,6 +1,7 @@
 import type { Order } from '../types/order'
 import { ContactSupportButton } from './ContactSupportButton'
 import { DelayedOrderBanner } from './DelayedOrderBanner'
+import { DeliveredNotReceivedAlert } from './DeliveredNotReceivedAlert'
 import { OrderProgressStepper } from './OrderProgressStepper'
 import { StatusBadge } from './StatusBadge'
 import { TrackingScreenFrame } from './TrackingScreenFrame'
@@ -21,6 +22,7 @@ interface OrderTrackingScreenProps {
 export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
   const showUpdatedEta =
     order.isDelayed && Boolean(order.originalEstimatedDeliveryDate)
+  const isDelivered = order.status === 'Delivered'
 
   return (
     <TrackingScreenFrame>
@@ -36,8 +38,16 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
           />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <StatusBadge status={order.status} isDelayed={order.isDelayed} />
-              {order.isDelayed && (
+              <StatusBadge
+                status={order.status}
+                isDelayed={order.isDelayed && !order.isDeliveredButNotReceived}
+              />
+              {order.isDeliveredButNotReceived && (
+                <span className="inline-flex items-center rounded-full bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-800 ring-1 ring-inset ring-rose-200">
+                  Confirm receipt
+                </span>
+              )}
+              {order.isDelayed && !order.isDeliveredButNotReceived && (
                 <span className="text-xs font-medium text-slate-500">
                   {order.status}
                 </span>
@@ -58,19 +68,33 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
           className={`rounded-2xl border px-4 py-4 shadow-sm ${
             order.isDelayed
               ? 'border-amber-200 bg-amber-50/40'
-              : 'border-slate-200/80 bg-white'
+              : order.isDeliveredButNotReceived
+                ? 'border-rose-200 bg-rose-50/30'
+                : 'border-slate-200/80 bg-white'
           }`}
         >
           <p
             className={`text-xs font-medium tracking-wide uppercase ${
-              order.isDelayed ? 'text-amber-800' : 'text-slate-500'
+              order.isDelayed
+                ? 'text-amber-800'
+                : order.isDeliveredButNotReceived
+                  ? 'text-rose-800'
+                  : 'text-slate-500'
             }`}
           >
-            {order.isDelayed ? 'Updated estimated delivery' : 'Estimated delivery'}
+            {order.isDelayed
+              ? 'Updated estimated delivery'
+              : isDelivered
+                ? 'Delivered on'
+                : 'Estimated delivery'}
           </p>
           <p
             className={`mt-1.5 text-xl font-semibold tracking-tight ${
-              order.isDelayed ? 'text-amber-950' : 'text-slate-900'
+              order.isDelayed
+                ? 'text-amber-950'
+                : order.isDeliveredButNotReceived
+                  ? 'text-rose-950'
+                  : 'text-slate-900'
             }`}
           >
             {formatDate(order.estimatedDeliveryDate)}
@@ -105,25 +129,17 @@ export function OrderTrackingScreen({ order }: OrderTrackingScreenProps) {
           />
         )}
 
-        {(order.isDeliveredButNotReceived || order.isTrackingUnavailable) && (
-          <div className="space-y-2">
-            {order.isDeliveredButNotReceived && (
-              <p
-                className="rounded-2xl border border-rose-200 bg-rose-50 px-3.5 py-3 text-sm leading-snug text-rose-950"
-                role="status"
-              >
-                Marked delivered, but not received — contact support if needed.
-              </p>
-            )}
-            {order.isTrackingUnavailable && (
-              <p
-                className="rounded-2xl border border-slate-200 bg-slate-100 px-3.5 py-3 text-sm leading-snug text-slate-700"
-                role="status"
-              >
-                Tracking details are not available for this order yet.
-              </p>
-            )}
-          </div>
+        {order.isDeliveredButNotReceived && (
+          <DeliveredNotReceivedAlert order={order} />
+        )}
+
+        {order.isTrackingUnavailable && (
+          <p
+            className="rounded-2xl border border-slate-200 bg-slate-100 px-3.5 py-3 text-sm leading-snug text-slate-700"
+            role="status"
+          >
+            Tracking details are not available for this order yet.
+          </p>
         )}
 
         {order.isTrackingUnavailable ? (
