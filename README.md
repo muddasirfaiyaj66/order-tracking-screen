@@ -25,6 +25,10 @@ src/
     OrderTrackingScreen.tsx
     OrderTrackingSkeleton.tsx
     OrderTrackingErrorState.tsx
+    ExpandableOrderDetails.tsx
+    ActionSheet.tsx
+    ContactSupportSheet.tsx
+    ReportDeliveryIssueSheet.tsx
     DelayedOrderBanner.tsx
     DeliveredNotReceivedAlert.tsx
     TrackingUnavailablePlaceholder.tsx

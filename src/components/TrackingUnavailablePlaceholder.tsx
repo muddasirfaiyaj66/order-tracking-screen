@@ -41,6 +41,7 @@ function PackageIcon({ className }: { className?: string }) {
 interface TrackingUnavailablePlaceholderProps {
   order: Order
   onCheckAgain?: () => void
+  onReportIssue?: () => void
 }
 
 /**
@@ -50,6 +51,7 @@ interface TrackingUnavailablePlaceholderProps {
 export function TrackingUnavailablePlaceholder({
   order,
   onCheckAgain,
+  onReportIssue,
 }: TrackingUnavailablePlaceholderProps) {
   if (!order.isTrackingUnavailable) return null
 
@@ -122,15 +124,26 @@ export function TrackingUnavailablePlaceholder({
         </ol>
       </div>
 
-      {onCheckAgain && (
-        <div className="border-t border-slate-100 px-5 py-3.5">
-          <button
-            type="button"
-            onClick={onCheckAgain}
-            className="flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-50 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400"
-          >
-            Check again
-          </button>
+      {(onCheckAgain || onReportIssue) && (
+        <div className="flex flex-col gap-2 border-t border-slate-100 px-5 py-3.5">
+          {onCheckAgain && (
+            <button
+              type="button"
+              onClick={onCheckAgain}
+              className="flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-50 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400"
+            >
+              Check again
+            </button>
+          )}
+          {onReportIssue && (
+            <button
+              type="button"
+              onClick={onReportIssue}
+              className="flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 active:scale-[0.99]"
+            >
+              Report a delivery issue
+            </button>
+          )}
         </div>
       )}
     </section>

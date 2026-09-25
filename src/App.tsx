@@ -1,12 +1,12 @@
 import { OrderTrackingErrorState } from './components/OrderTrackingErrorState'
 import { OrderTrackingScreen } from './components/OrderTrackingScreen'
 import { OrderTrackingSkeleton } from './components/OrderTrackingSkeleton'
-import { trackingUnavailableMockOrder } from './data/mockOrders'
+import { mockOrder } from './data/mockOrders'
 import { useOrderTracking } from './hooks/useOrderTracking'
 
 function App() {
   const { status, order, errorMessage, reload } = useOrderTracking(
-    trackingUnavailableMockOrder.orderId,
+    mockOrder.orderId,
   )
 
   if (status === 'loading') {
@@ -17,7 +17,7 @@ function App() {
     return (
       <OrderTrackingErrorState
         variant="error"
-        orderId={trackingUnavailableMockOrder.orderId}
+        orderId={mockOrder.orderId}
         message={errorMessage ?? undefined}
         onRetry={reload}
       />
@@ -28,7 +28,7 @@ function App() {
     return (
       <OrderTrackingErrorState
         variant="empty"
-        orderId={trackingUnavailableMockOrder.orderId}
+        orderId={mockOrder.orderId}
         message={errorMessage ?? undefined}
         onRetry={reload}
       />

@@ -1,9 +1,12 @@
-import type { Order } from '../types/order'
+import { useState } from 'react'
+import type { DeliveryIssueType, Order } from '../types/order'
 import { ContactSupportButton } from './ContactSupportButton'
+import { ContactSupportSheet } from './ContactSupportSheet'
 import { DelayedOrderBanner } from './DelayedOrderBanner'
 import { DeliveredNotReceivedAlert } from './DeliveredNotReceivedAlert'
+import { ExpandableOrderDetails } from './ExpandableOrderDetails'
 import { OrderProgressStepper } from './OrderProgressStepper'
-import { StatusBadge } from './StatusBadge'
+import { ReportDeliveryIssueSheet } from './ReportDeliveryIssueSheet'
 import { TrackingScreenFrame } from './TrackingScreenFrame'
 import { TrackingUnavailablePlaceholder } from './TrackingUnavailablePlaceholder'
 
@@ -25,52 +28,31 @@ export function OrderTrackingScreen({
   order,
   onRefreshTracking,
 }: OrderTrackingScreenProps) {
+  const [supportOpen, setSupportOpen] = useState(false)
+  const [reportOpen, setReportOpen] = useState(false)
+  const [reportDefaultType, setReportDefaultType] = useState<
+    DeliveryIssueType | undefined
+  >(undefined)
+
   const showUpdatedEta =
     order.isDelayed && Boolean(order.originalEstimatedDeliveryDate)
   const isDelivered = order.status === 'Delivered'
 
+  const openReportIssue = (defaultType?: DeliveryIssueType) => {
+    setReportDefaultType(defaultType)
+    setSupportOpen(false)
+    setReportOpen(true)
+  }
+
   return (
     <TrackingScreenFrame>
-      <header className="border-b border-slate-200/80 bg-white px-5 pt-5 pb-4">
-        <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">
-          Order tracking
-        </p>
-        <div className="mt-3 flex items-start gap-3.5">
-          <img
-            src={order.productImage}
-            alt=""
-            className="size-[72px] shrink-0 rounded-2xl bg-slate-100 object-cover ring-1 ring-slate-200/80"
-          />
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <StatusBadge
-                status={order.status}
-                isDelayed={order.isDelayed && !order.isDeliveredButNotReceived}
-              />
-              {order.isDeliveredButNotReceived && (
-                <span className="inline-flex items-center rounded-full bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-800 ring-1 ring-inset ring-rose-200">
-                  Confirm receipt
-                </span>
-              )}
-              {order.isTrackingUnavailable && (
-                <span className="inline-flex items-center rounded-full bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-800 ring-1 ring-inset ring-sky-200">
-                  Tracking soon
-                </span>
-              )}
-              {order.isDelayed && !order.isDeliveredButNotReceived && (
-                <span className="text-xs font-medium text-slate-500">
-                  {order.status}
-                </span>
-              )}
-            </div>
-            <h1 className="mt-2 text-[17px] leading-snug font-semibold tracking-tight text-slate-900">
-              {order.productName}
-            </h1>
-            <p className="mt-1 text-sm text-slate-500">
-              Order <span className="font-medium text-slate-700">{order.orderId}</span>
-            </p>
-          </div>
+      <header className="bg-white">
+        <div className="px-5 pt-5">
+          <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">
+            Order tracking
+          </p>
         </div>
+        <ExpandableOrderDetails order={order} />
       </header>
 
       <main className="flex flex-1 flex-col gap-4 px-5 py-5">
@@ -137,6 +119,8 @@ export function OrderTrackingScreen({
         {order.isDelayed && (
           <DelayedOrderBanner
             order={order}
+            onContactSupport={() => setSupportOpen(true)}
+            onReportIssue={() => openReportIssue('delayed')}
             onTrackLiveLocation={() => {
               window.alert(
                 `Live location for ${order.orderId} would open here.`,
@@ -146,13 +130,17 @@ export function OrderTrackingScreen({
         )}
 
         {order.isDeliveredButNotReceived && (
-          <DeliveredNotReceivedAlert order={order} />
+          <DeliveredNotReceivedAlert
+            order={order}
+            onReportIssue={() => openReportIssue('not_received')}
+          />
         )}
 
         {order.isTrackingUnavailable ? (
           <TrackingUnavailablePlaceholder
             order={order}
             onCheckAgain={onRefreshTracking}
+            onReportIssue={() => openReportIssue()}
           />
         ) : (
           <OrderProgressStepper currentStatus={order.status} />
@@ -160,8 +148,23 @@ export function OrderTrackingScreen({
       </main>
 
       <footer className="mt-auto border-t border-slate-200/80 bg-white px-5 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-        <ContactSupportButton orderId={order.orderId} />
+        <ContactSupportButton onClick={() => setSupportOpen(true)} />
       </footer>
+
+      <ContactSupportSheet
+        open={supportOpen}
+        order={order}
+        onClose={() => setSupportOpen(false)}
+        onReportIssue={() => openReportIssue()}
+      />
+
+      <ReportDeliveryIssueSheet
+        key={`${reportOpen}-${reportDefaultType ?? 'none'}`}
+        open={reportOpen}
+        order={order}
+        defaultIssueType={reportDefaultType}
+        onClose={() => setReportOpen(false)}
+      />
     </TrackingScreenFrame>
   )
 }

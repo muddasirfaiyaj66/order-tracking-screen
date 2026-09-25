@@ -58,11 +58,15 @@ function resolveNextStep(order: Order): DelayedNextStep {
 interface DelayedOrderBannerProps {
   order: Order
   onTrackLiveLocation?: () => void
+  onContactSupport: () => void
+  onReportIssue: () => void
 }
 
 export function DelayedOrderBanner({
   order,
   onTrackLiveLocation,
+  onContactSupport,
+  onReportIssue,
 }: DelayedOrderBannerProps) {
   if (!order.isDelayed) return null
 
@@ -104,8 +108,8 @@ export function DelayedOrderBanner({
         </p>
       </div>
 
-      <div className="border-t border-amber-200/80 px-4 py-3">
-        <p className="mb-2 text-xs font-medium text-amber-900/80">
+      <div className="flex flex-col gap-2 border-t border-amber-200/80 px-4 py-3">
+        <p className="text-xs font-medium text-amber-900/80">
           Suggested next step
         </p>
         {nextStep === 'track_live_location' ? (
@@ -118,8 +122,15 @@ export function DelayedOrderBanner({
             Track live location
           </button>
         ) : (
-          <ContactSupportButton orderId={order.orderId} />
+          <ContactSupportButton onClick={onContactSupport} />
         )}
+        <button
+          type="button"
+          onClick={onReportIssue}
+          className="flex w-full items-center justify-center rounded-xl border border-amber-300 bg-white px-4 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-50 active:scale-[0.99]"
+        >
+          Report a delivery issue
+        </button>
       </div>
     </section>
   )

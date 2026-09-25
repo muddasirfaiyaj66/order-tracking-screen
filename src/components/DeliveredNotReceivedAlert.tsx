@@ -40,7 +40,7 @@ function CheckIcon({ className }: { className?: string }) {
 interface DeliveredNotReceivedAlertProps {
   order: Order
   onConfirmReceipt?: () => void
-  onReportIssue?: () => void
+  onReportIssue: () => void
 }
 
 type ReceiptOutcome = 'idle' | 'confirmed' | 'reported'
@@ -97,23 +97,13 @@ export function DeliveredNotReceivedAlert({
             </p>
             <p className="mt-1 text-sm leading-snug text-rose-900/85">
               Support will follow up about order {order.orderId}. You can also
-              email us anytime from below.
+              email us anytime from Contact Support.
             </p>
           </div>
         </div>
       </section>
     )
   }
-
-  const reportHref = (() => {
-    const subject = encodeURIComponent(
-      `I haven't received order ${order.orderId}`,
-    )
-    const body = encodeURIComponent(
-      `Hi Support,\n\nOrder ${order.orderId} is marked as Delivered, but I have not received it.\n\nProduct: ${order.productName}\n\nPlease help investigate.\n\nThanks,`,
-    )
-    return `mailto:support@example.com?subject=${subject}&body=${body}`
-  })()
 
   return (
     <section
@@ -151,22 +141,22 @@ export function DeliveredNotReceivedAlert({
           type="button"
           onClick={() => {
             setOutcome('reported')
-            onReportIssue?.()
+            onReportIssue()
           }}
           className="flex w-full items-center justify-center rounded-xl bg-rose-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-rose-800 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700"
         >
           I haven&apos;t received this
         </button>
-        <a
-          href={reportHref}
+        <button
+          type="button"
           onClick={() => {
             setOutcome('reported')
-            onReportIssue?.()
+            onReportIssue()
           }}
           className="flex w-full items-center justify-center rounded-xl border border-rose-300 bg-white px-4 py-3 text-sm font-semibold text-rose-900 transition hover:bg-rose-50 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400"
         >
           Report an issue
-        </a>
+        </button>
         <button
           type="button"
           onClick={() => {
